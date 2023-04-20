@@ -1,2 +1,2 @@
 # E-waiter-sssf-backend
- Repository for the Server-side Scripting course project - E-waiter
+ Repository for the Server-side Scripting Frameworks course project - E-waiter
