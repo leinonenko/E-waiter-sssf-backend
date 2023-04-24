@@ -1,12 +1,11 @@
 import {Document} from 'mongoose';
-import {Category} from './ICategory';
+import {Product} from './IProduct';
 
 interface MenuItem extends Document {
-  name: string;
-  category: Category;
+  id: number;
+  product: Product;
   price: number;
-  size: number;
-  description: string;
+  quantity: number;
 }
 
 export {MenuItem};

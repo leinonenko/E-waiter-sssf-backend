@@ -1,11 +1,12 @@
 import {Document} from 'mongoose';
+import { Table } from './ITable';
 
 interface User extends Document {
-  id: ID;
+  id: number;
   name: string;
   email: string;
   password: string;
-  tableNumber: number;
+  tableNumber: Table;
 }
 
 interface UserIdWithToken {

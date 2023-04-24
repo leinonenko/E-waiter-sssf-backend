@@ -1,4 +1,3 @@
-import catResolver from './catResolver';
-import userReslover from './userResolver';
+import userReslover from './userReslover';
 
-export default [catResolver, userReslover];
+export default [userReslover];
