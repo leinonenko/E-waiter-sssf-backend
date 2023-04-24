@@ -1,0 +1,4 @@
+type Table {
+  tableNumber: Int!
+  orders: [Order]
+}

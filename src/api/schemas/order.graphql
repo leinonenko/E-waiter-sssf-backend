@@ -1,0 +1,17 @@
+type Order {
+  id: ID!
+  client: User
+  table: Table
+  items: [Item]
+  total: Float
+}
+
+type Query {
+  orders: [Order]
+  orderById(id: ID!): Order
+}
+
+type Mutation {
+  createOrder(client: ID!, table: ID!, items: [ID!]!): Order
+  deleteOrder(id: ID!): Order
+}

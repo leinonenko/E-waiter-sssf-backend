@@ -1,0 +1,15 @@
+type MenuItem {
+  id: ID
+  product: Product
+  quantity: Int
+  price: Float
+}
+type Query {
+  getMenuItem(id: ID!): MenuItem
+  getMenuItems: [MenuItem]
+}
+
+type Mutation {
+  createMenuItem(product: ID!, quantity: Int!, price: Float!): MenuItem
+  updateMenuItem(id: ID!, product: ID, quantity: Int, price: Float): MenuItem
+}

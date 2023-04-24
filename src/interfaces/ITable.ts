@@ -2,7 +2,7 @@ import {Document} from 'mongoose';
 import {Order} from './IOrder';
 
 interface Table extends Document {
-  number: number;
+  tableNumber: number;
   orders: [Order];
 }
 
