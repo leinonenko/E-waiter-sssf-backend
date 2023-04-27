@@ -2,7 +2,7 @@ type Order {
   id: ID!
   client: User
   table: Table
-  items: [Item]
+  items: [MenuItem]
   total: Float
 }
 

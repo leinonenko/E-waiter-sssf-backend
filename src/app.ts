@@ -3,25 +3,76 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 
+import {ApolloServer} from '@apollo/server';
+import {expressMiddleware} from '@apollo/server/express4';
+import typeDefs from './api/schemas/index';
+import resolvers from './api/resolvers/index';
+import {
+  ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginLandingPageProductionDefault,
+} from '@apollo/server/plugin/landingPage/default';
 import {notFound, errorHandler} from './middlewares';
-import MessageResponse from './interfaces/MessageResponse';
-import userRoute from './api/routes/userRoute';
+import {MyContext} from './interfaces/MyContext';
+import {shield} from 'graphql-shield';
+import {applyMiddleware} from 'graphql-middleware';
+import {makeExecutableSchema} from '@graphql-tools/schema';
+import {createRateLimitRule} from 'graphql-rate-limit';
+import authenticate from './functions/authenticate';
 
 const app = express();
 
-app.use(helmet());
-app.use(cors());
-app.use(express.json());
+(async () => {
+  try {
+    const rateLimitRule = createRateLimitRule({
+      identifyContext: (ctx) => ctx.id,
+    });
 
-app.get<{}, MessageResponse>('/', (req, res) => {
-  res.json({
-    message: 'API location: api/v1',
-  });
-});
+    const permissions = shield({
+      Mutation: {login: rateLimitRule({window: '1s', max: 5})},
+    });
 
-app.use('/users', userRoute);
+    const schema = applyMiddleware(
+      makeExecutableSchema({
+        typeDefs,
+        resolvers,
+      }),
+      permissions
+    );
 
-app.use(notFound);
-app.use(errorHandler);
+    app.use(
+      helmet({
+        crossOriginEmbedderPolicy: false,
+        contentSecurityPolicy: false,
+      })
+    );
+    const server = new ApolloServer<MyContext>({
+      schema: schema,
+      introspection: true,
+      plugins: [
+        process.env.NODE_ENV === 'production'
+          ? ApolloServerPluginLandingPageProductionDefault({
+              embed: true as false,
+            })
+          : ApolloServerPluginLandingPageLocalDefault(),
+      ],
+      includeStacktraceInErrorResponses: false,
+    });
+    await server.start();
+
+    app.use(
+      '/graphql',
+      express.json(),
+      cors<cors.CorsRequest>(),
+      expressMiddleware(server, {
+        context: async ({req}) => authenticate(req),
+      })
+    );
+
+    app.use(notFound);
+    app.use(errorHandler);
+  } catch (error) {
+    console.log(error);
+  }
+})();
 
 export default app;

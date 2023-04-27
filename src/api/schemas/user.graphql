@@ -11,7 +11,7 @@ type TokenMessage {
 }
 
 input Credentials {
-  username: String!
+  email: String!
   password: String!
 }
 
@@ -35,7 +35,7 @@ type Query {
 
 type Mutation {
   registerUser(user: UserInput!): TokenMessage
-  loginUser(credentials: Credentials!): TokenMessage
-  updateUser(user: UserModify!): TokenMessage
+  updateProfile(user: UserModify!): TokenMessage
   deleteUser(id: ID!): User
+  login(credentials: Credentials!): TokenMessage
 }

@@ -1,3 +1,2 @@
-import userReslover from './userReslover';
-
+import userReslover from './userResolver';
 export default [userReslover];
