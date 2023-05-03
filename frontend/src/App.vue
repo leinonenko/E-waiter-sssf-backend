@@ -1,4 +1,7 @@
 <script setup>
+import { useAuthStore } from "./auth/auth.store";
+
+const store = useAuthStore();
 </script>
 
 <template>
