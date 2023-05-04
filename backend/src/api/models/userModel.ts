@@ -3,11 +3,27 @@ import {User} from '../../interfaces/IUser';
 
 const userModel = new mongoose.Schema<User>({
   name: {
-    name: {type: String, required: true},
-    email: {type: String, required: true, unique: true},
-    password: {type: String, required: true},
-    tableNumber: {type: Number, required: true},
-  }
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user',
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+});
+
+userModel.set('toJSON', {
+  virtuals: true,
 });
 
 export default mongoose.model<User>('User', userModel);
