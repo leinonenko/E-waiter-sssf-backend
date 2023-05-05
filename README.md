@@ -17,9 +17,19 @@ The app works by allowing clients to scan a QR code from their table, which is a
 
 ## Installation
 - Clone the repository
-- Install dependencies using `npm install`
+```bash
+https://github.com/leinonenko/E-waiter-sssf-project.git
+```
+- Install dependencies using npm
+```bash
+npm install
+```
 - Set up the environment variables by creating a `.env` file
-- Start the app using `npm run start` or `npm run dev` for development purpose
+- Start the app using ```bash
+npm run start
+``` or ```bash
+npm run dev
+``` for development purpose
 
 ## License
 This project is licensed under the MIT License.
