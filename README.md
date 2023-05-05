@@ -14,6 +14,7 @@ The app works by allowing clients to scan a QR code from their table, which is a
 - TypeScript v5.0.4
 - Express.js v4.18.2
 - MongoDB v6.0.5
+- GraphQL API
 - Vite v4.3.4 (frontend)
 - Vue 3 v5.0.8 (frontend)
 
